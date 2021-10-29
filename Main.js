@@ -1,0 +1,1 @@
+console.log("dette er main js-filen");
