@@ -9,7 +9,9 @@ for (let i = 0; i < img.width; i++) {
 
     img.set(i, j, color(0, 90, 102));
   }
-  
+
 }
 img.updatePixels();
 image(img, 17, 17);
+
+//test
