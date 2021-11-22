@@ -1,11 +1,12 @@
 let cow =new ImageClass('Images/cow.jfif',(window.innerWidth/3.7),(window.innerHeight/2),200,0)
 let pig =new ImageClass('Images/gris.jfif',(window.innerWidth/3.7),(window.innerHeight/2),200,1)
 let sheep =new ImageClass('Images/Får.jfif',(window.innerWidth/3.7),(window.innerHeight/2),200,2)
-
+let tempAnimals=[];
 let animals=[cow,pig,sheep];
 let Sprites=[];
-let sounds=['Sounds/Far.mp3','Sounds/Gris.mp3','Sounds/Ko.mp3','Sounds/Ja.mp3','Sounds/Nej.mp3'];
-let randomPosOfImages=[];
+let sounds=['Sounds/Ko.mp3','Sounds/Gris.mp3','Sounds/Far.mp3','Sounds/Ja.mp3','Sounds/Nej.mp3'];
+const randomPosOfImages=[];
+
 let imgXpos=animals[0].Xpos;
 let imgYpos=animals[0].Ypos;
 let imgSize=animals[0].size;
@@ -15,7 +16,7 @@ let PlayButton;
 let end =0;
 let clickCounter=0;
 let rando;
-
+let index=3;
 
 // opsætter spillet og laver billderne 
 function setup(){
@@ -27,6 +28,8 @@ function setup(){
   console.log("Spil tilstand " + isGameInProgress);
   rando = int(random(0,3));
   randomPos();
+  
+  
 };
 
 // en funktion der loader alle billederne 
@@ -42,11 +45,13 @@ function preload() {
 // en funktion der laver tegner alle billeder
 function drawImages() {
   if(isGameInProgress == true){
-    for(let n=0; n <animals.length; n++){
-       if(end < 3){
-       image(Sprites[n],imgXpos,imgYpos,imgSize,imgSize);
-       imgXpos += 250;}
-       end ++}
+    for(let n=0; n <tempAnimals.length; n++){
+      
+      if(end < 3){
+       image(Sprites[randomPosOfImages[n]],imgXpos,imgYpos,imgSize,imgSize);
+       imgXpos += 250;
+      };
+      end ++};
      };
 };
 function mouseClicked() {
@@ -65,46 +70,69 @@ if (mouseX < ((window.innerWidth/2.05)+50) && mouseX >(window.innerWidth/2.05) &
    mouseY<((window.innerHeight/4)+50) &&mouseY>(window.innerHeight/4)&& clickCounter >= 1){
    clickCounter ++;
    afspilDyrLyd();
+   console.log(rando);
    
   
   };
 
  if(mouseX>imgXposO && mouseX<(imgXposO+200) && mouseY>imgYpos && 
- mouseY<(imgYpos+200)){
-console.log(animals[0].id);
+ mouseY<(imgYpos+200)&&isGameInProgress==true){
+console.log(tempAnimals[0].id);
+checkAnimal(0);
  };
 
- if((mouseX>imgXposO+250) && mouseX<(imgXposO+500) && mouseY>imgYpos && 
- mouseY<(imgYpos+200)){
-  console.log(animals[1].id);
+ if((mouseX>imgXposO+250) && mouseX<(imgXposO+450) && mouseY>imgYpos && 
+ mouseY<(imgYpos+200)&&isGameInProgress==true){
+  console.log(tempAnimals[1].id);
+  checkAnimal(1);
  };
 
- if((mouseX>imgXposO+500) && mouseX<(imgXposO+750) && mouseY>imgYpos && 
- mouseY<(imgYpos+200)){
-  console.log(animals[2].id);
+ if((mouseX>imgXposO+500) && mouseX<(imgXposO+700) && mouseY>imgYpos && 
+ mouseY<(imgYpos+200)&&isGameInProgress==true){
+  console.log(tempAnimals[2].id);
+  checkAnimal(2);
  };
   
 };
 
+// bruges til at af spille lyd når man klikker på knappen 
 function afspilDyrLyd(){
   sounds[rando].play();
 };
 
-/*function checkAnimal() {
-  if(animals[])
-};*/
-function randomPos() {
-  debugger
-for(let p=0;p <3;p++ ){
-  let primeNumber= (int(random(0,2)));
-  if (!randomPosOfImages.includes(primeNumber)) {
-     randomPosOfImages.push(primeNumber)
+function checkAnimal(inp) {
+  console.log(tempAnimals[inp].id);
+  console.log(rando);
+  if(tempAnimals[inp].id==rando){
+    sounds[3].play();
+    animals=[cow,sheep,pig];
+    Sprites=[];
+    tempAnimals=[];
+    end=0;
+    randomPos();
+    drawImages();
   }
-  else{p--};
-}
-console.log(randomPosOfImages);
+  else{sounds[4].play()};
 };
 
+// laver et array med tallene 0,1,2 i en tilfældige rækkefølge
+// som bruges til at give billederne en random location 
+function randomPos() {
+  let p=0;
+while(p<3){
+  let primeNumber= (int(random(0,3)));
+  if (!randomPosOfImages.includes(primeNumber)) {
+     randomPosOfImages.push(primeNumber)
+     p++;
+  };  
+};
+console.log(randomPosOfImages);
+for(let i=0;i<index;i++){
+  tempAnimals.push(animals[randomPosOfImages[i]])
+  console.log(tempAnimals[i].id);
+};
+
+};
 function draw(){
   
   //  fill('red')
@@ -113,4 +141,4 @@ function draw(){
   //  rect((imgXposO+250),(window.innerHeight/1.8),200,200);
   //  fill('red')
   //  rect((imgXposO+500),(window.innerHeight/1.8),200,200);
-};
+}
