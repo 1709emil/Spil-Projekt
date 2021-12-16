@@ -121,8 +121,6 @@ function afspilDyrLyd(){
 // her tjekkes der om det billede, der blev klikket 
 //har den samme id som den dyr lyd der blev spillet
 function checkAnimal(inp) {
-  console.log(tempAnimals[inp].id);
-  console.log(rando);
   if(tempAnimals[inp].id==rando){
     console.log("rigtigt");
     replay();
