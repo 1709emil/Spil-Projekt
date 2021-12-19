@@ -36,19 +36,15 @@ function setup(){
 
 // en funktion der loader alle billederne 
 function preload() {
-  loadOfImages();
+  loadImage('/Images/logo.png')
   for(let ct = 0; ct <5;ct++){
     soundFormats('m4a','mp3');
     sounds[ct]=loadSound(sounds[ct])
   };
-};
-
-function loadOfImages() {
   for(let i=0; i <animals.length; i ++){
     Sprites[i]=loadImage(animals[i].Sprites)
   };
-  loadImage('/Images/logo.png')
-}
+};
 
 // en funktion der laver tegner alle billeder
 function drawImages() {
@@ -57,7 +53,6 @@ function drawImages() {
       if(end < 3){
        image(Sprites[randomPosOfImages[n]],imgXpos,imgYpos,imgSize,imgSize);
        imgXpos += 250;
-       
       };
       end ++};
      };
@@ -86,19 +81,16 @@ if (mouseX < ((window.innerWidth/2.08)+50) && mouseX >(window.innerWidth/2.08) &
 // knap for billede 1
  if(mouseX>imgXposO && mouseX<(imgXposO+200) && mouseY>imgYpos && 
  mouseY<(imgYpos+200)&&isGameInProgress==true){
-console.log(tempAnimals[0].id);
 checkAnimal(0);
  };
 // knap for billede 2
  if((mouseX>imgXposO+250) && mouseX<(imgXposO+450) && mouseY>imgYpos && 
  mouseY<(imgYpos+200)&&isGameInProgress==true){
-  console.log(tempAnimals[1].id);
   checkAnimal(1);
  };
 // knap for billede 3
  if((mouseX>imgXposO+500) && mouseX<(imgXposO+700) && mouseY>imgYpos && 
  mouseY<(imgYpos+200)&&isGameInProgress==true){
-  console.log(tempAnimals[2].id);
   checkAnimal(2);
  };
   
@@ -116,7 +108,6 @@ function afspilDyrLyd(){
     console.log("sound playing");
   };
     
-  
 };
 // her tjekkes der om det billede, der blev klikket 
 //har den samme id som den dyr lyd der blev spillet
@@ -143,10 +134,8 @@ while(p<3){
      p++;
   };  
 };
-console.log(randomPosOfImages);
 for(let i=0;i<index;i++){
   tempAnimals.push(animals[randomPosOfImages[i]])
-  console.log(tempAnimals[i].id);
 };
 
 };
